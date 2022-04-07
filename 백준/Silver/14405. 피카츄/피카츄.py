@@ -1,0 +1,9 @@
+txt=input()
+txt=txt.replace("pi","0")
+txt=txt.replace("ka","0")
+txt=txt.replace("chu","0")
+try:
+    int(txt)
+    print("YES")
+except:
+    print("NO")
