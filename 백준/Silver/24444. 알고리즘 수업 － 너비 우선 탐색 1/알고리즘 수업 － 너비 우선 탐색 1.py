@@ -2,35 +2,35 @@ from collections import deque
 import sys
 input = sys.stdin.readline
 
-N,M,R = map(int,sys.stdin.readline().split())
+n,m,start = map(int,input().split())
 
-graph=[[] for _ in range(N+1)]
+graph=[[] for _ in range(n+1)]
 
-for i in range(M):
-    tmpL=list(map(int,sys.stdin.readline().split()))
-    graph[tmpL[0]].append(tmpL[1])
-    graph[tmpL[1]].append(tmpL[0])
+for _ in range(m):
+    a,b=map(int,input().split())
+    graph[a].append(b)
+    graph[b].append(a)
 
-for i in range(N+1):
+for i in range(n+1):
     graph[i].sort()
 
-def bfs(graph,R,visited):
-    queue=deque([R])
-    visited[R]=1
-    count=2
+def bfs(graph,start,visited):
+    queue=deque([start])
+    visited[start]=1
+    cnt=2
     
     while queue:
-        R=queue.popleft()
+        start=queue.popleft()
         
-        for i in graph[R]:
+        for i in graph[start]:
             if visited[i]==0:
                 queue.append(i)
-                visited[i]=count 
-                count+=1
+                visited[i]=cnt 
+                cnt+=1
 
-visited=[0]*(N+1)
+visited=[0]*(n+1)
 
-bfs(graph,R,visited)
+bfs(graph,start,visited)
 
 for i in visited[1::]:
     print(i)
