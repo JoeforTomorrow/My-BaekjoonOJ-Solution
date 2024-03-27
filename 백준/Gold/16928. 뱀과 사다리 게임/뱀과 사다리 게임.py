@@ -1,33 +1,28 @@
 from collections import deque
 
-n,m = map(int, input().split())
-
-ladders = {}
-snakes = {}
-
-for _ in range(n):
+n,m = map(int,input().split())
+# ladders, snakes = {}, {}
+jump = {}
+for _ in range(n+m):
     a,b = map(int,input().split())
-    ladders[a] = b
+    jump[a] = b
 
-for _ in range(m):
-    a,b = map(int,input().split())
-    snakes[a] = b
-
-graph = [0] * 101
+board = [0] * 101
 visited = [False] * 101
 
 q = deque([1])
 
 while q:
     place = q.popleft()
+    visited[place] = True
     if place == 100:
-        print(graph[place])
+        print(board[place])
         break
-    for dice in range(1, 7):
-        next_place = place + dice
-        if next_place <= 100 and not visited[next_place]:
-            next_place = ladders.get(next_place) or snakes.get(next_place) or next_place
-            if not visited[next_place]:
-                visited[next_place] = True
-                graph[next_place] = graph[place] + 1
-                q.append(next_place)
+    for dice in range(1,7):
+        new_place = place + dice
+        if new_place <= 100 and not visited[new_place]:
+            new_place = jump.get(new_place, new_place)
+            if not visited[new_place]:
+                visited[new_place] = True
+                board[new_place] = board[place] + 1
+                q.append(new_place)
